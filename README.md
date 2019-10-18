@@ -1,4 +1,4 @@
-# api-monitor
+# api-status
 
 ## Project setup
 ```
