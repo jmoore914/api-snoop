@@ -1,5 +1,5 @@
 {
-  "name": "api-status",
+  "name": "api-watcher",
   "version": "0.1.0",
   "scripts": {
     "serve": "vue-cli-service serve",
