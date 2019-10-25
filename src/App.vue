@@ -1,28 +1,39 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
+    <div
+      v-for="(tab, tabIndex) in tabs"
+      :key="'tab' + tabIndex"
+    >
+      <Tab :tab-index="tabIndex" />
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
-import HelloWorld from './components/HelloWorld.vue';
+import {store} from './store/store';
+import Tab from './components/Tab.vue';
 
 export default Vue.extend({
-  name: 'app',
-  components: {
-    HelloWorld
-  }
+	name: 'App',
+	components: {
+		Tab
+	},
+	data() {
+		return {
+			tabs: store.tabs
+		};
+	}
 });
 </script>
 
+<style src="./style/style.css"/>
+
 <style>
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
   margin-top: 60px;
 }
