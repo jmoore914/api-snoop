@@ -1,3 +1,11 @@
+export function getObjectProperty<T, K extends keyof T>(obj: T, key: K): T[K] {
+	return obj[key];
+}
+
+export function setObjectProperty<T, K extends keyof T>(obj: T, key: K, value: T[K]): void {
+	obj[key] = value;
+}
+
 export function cloneObject<T>(object: T): T{
 	return JSON.parse(JSON.stringify(object));
 }
@@ -29,9 +37,12 @@ export function createEmptyApiCard(): ApiCard{
 export function createEmptyTab(): Tab{
 	const emptyApiCard = createEmptyApiCard();
 	return {
-		name: '',
+		name: 'New Tab',
 		isMonitoring: false,
 		apis: [emptyApiCard]
 	};
 }
 
+export function createEmptyCallResponse(): ApiCallResponse{
+	return cloneObject({time: '', code: 0, text: ''});
+}

@@ -1,12 +1,19 @@
 html {
     box-sizing: border-box;
   }
-
 *, *:before, *:after {
     box-sizing: inherit;
+}
+
+body{
+  background-color: #dfdfdf;
 }
 
 .clickable:hover {
   cursor: pointer;
   opacity: 60%;
+}
+
+.circle{
+  border-radius: 50%;
 }

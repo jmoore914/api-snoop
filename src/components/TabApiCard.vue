@@ -143,7 +143,7 @@
 <script lang="ts">
 import {store} from '../store/store';
 import {apiCall} from '../mixins/apiCalls';
-import {sleep} from '../mixins/sharedFunctions';
+import {sleep, createEmptyCallResponse} from '../mixins/sharedFunctions';
 
 import Vue from 'vue';
 
@@ -155,7 +155,7 @@ export default Vue.extend({
 	data() {
 		return {
 			apiCardInfo: store.tabs[this.tabIndex].apis[this.apiIndex] as ApiCard,
-			lastResponse: {time: '', code: 0, text: ''},
+			lastResponse: createEmptyCallResponse(),
 			editMode: true,
 			apiMethods: ['GET', 'POST', 'PUT'],
 			refreshing: false,
@@ -165,7 +165,6 @@ export default Vue.extend({
 	},
 	computed: {
 		namePlaceholder(): string {
-			console.log(store.tabs[0].apis[0]);
 			return this.editMode ? 'Enter name' : '';
 		},
 		isAvailable(): boolean {
@@ -191,14 +190,15 @@ export default Vue.extend({
 			this.isLooping = true;
 			do {
 				this.sendRequest();
-				await sleep(store.refreshIntervalSecs);
+				await sleep(store.modals.modalSettings.refreshIntervalSecs);
 			} while (this.apiCardInfo.isMonitoring);
 			this.isLooping = false;
 		},
 
 		async sendRequest(): Promise<void> {
 			this.refreshing = true;
-			const resp = await apiCall(this.apiCardInfo.callInfo, store.timeoutSecs);
+			const resp = await apiCall(this.apiCardInfo.callInfo,
+				store.modals.modalSettings.timeoutSecs);
 			this.lastResponse = resp;
 			this.apiCardInfo.apiAvailable = this.isAvailable;
 			this.refreshing = false;
@@ -225,9 +225,11 @@ export default Vue.extend({
 .api {
   padding: 20px;
   display: grid;
-  grid-template-columns: 5% 60% 30%;
-  width: 80%;
+  grid-template-columns: 5% 70% 30%;
+  width: 70%;
   background: #c9c9c9;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  margin-left: 5%;
 }
 
 .expandButton {

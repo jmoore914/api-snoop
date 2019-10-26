@@ -1,5 +1,7 @@
 <template>
   <div id="app">
+    <ModalSettings />
+    <TabBar />
     <div
       v-for="(tab, tabIndex) in tabs"
       :key="'tab' + tabIndex"
@@ -13,11 +15,15 @@
 import Vue from 'vue';
 import {store} from './store/store';
 import Tab from './components/Tab.vue';
+import TabBar from './components/TabBar.vue';
+import ModalSettings from './components/ModalSettings.vue';
 
 export default Vue.extend({
 	name: 'App',
 	components: {
-		Tab
+		Tab,
+		TabBar,
+		ModalSettings
 	},
 	data() {
 		return {
@@ -36,5 +42,6 @@ export default Vue.extend({
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
   margin-top: 60px;
+  font-size: 16px;
 }
 </style>

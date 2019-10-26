@@ -30,3 +30,19 @@ interface ApiCallResponse {
 	text: string;
 
 }
+
+interface ModalBase{
+	show: boolean;
+	showContainer: boolean;
+}
+
+interface ModalSettings extends ModalBase {
+	timeoutSecs: number;
+	refreshIntervalSecs: number;
+}
+
+interface ModalLastResponse extends ModalBase {
+	lastResponse: ApiCallResponse;
+}
+
+type Modal = ModalSettings | ModalLastResponse
