@@ -46,3 +46,12 @@ interface ModalLastResponse extends ModalBase {
 }
 
 type Modal = ModalSettings | ModalLastResponse
+
+interface Store {
+	tabs: Tab[];
+	selectedTabIndex: number;
+	modals: {
+		modalSettings: ModalSettings;
+		modalLastResponse: ModalLastResponse;
+	};
+}

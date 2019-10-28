@@ -10,6 +10,45 @@ export function cloneObject<T>(object: T): T{
 	return JSON.parse(JSON.stringify(object));
 }
 
+export function checkObjectMatchesType(template: object, object: object): boolean{
+	const templateProps = Object.keys(template) as (keyof typeof template)[];
+	const objectProps = Object.keys(object)  as (keyof typeof object)[];
+	if(templateProps.length !== objectProps.length){
+		return false;
+	}
+
+	if(!templateProps.every(prop => {
+		const templateProp = getObjectProperty(template, prop);
+		const objProp = getObjectProperty(object, prop);
+		if( typeof templateProp !== typeof objProp){
+			return false;
+		}
+		if(Array.isArray(objProp)){
+			if((objProp as unknown[]).length===0){
+				return false;
+			}
+			return (objProp as unknown[]).every( objPropArrItem => {
+				if( typeof templateProp[0] !== typeof objPropArrItem){
+					return false;
+				}
+				if(typeof templateProp[0] === 'object'){
+					return checkObjectMatchesType(templateProp[0], objPropArrItem as object);
+				}
+				return true;
+			});
+		}
+		if(typeof templateProp === 'object'){
+			return checkObjectMatchesType(templateProp, objProp);
+		}
+		return true;
+	})){
+		return false;
+	}
+	return true;
+
+
+}
+
 export function sleep(sec: number): Promise<void> {
 	return new Promise(resolve => setTimeout(resolve, sec*1000));
 }
