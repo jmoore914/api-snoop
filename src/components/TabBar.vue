@@ -1,40 +1,40 @@
 <template>
-  <table class="tabBar">
-    <tr class="tabsRow">
-      <td class="tabNames">
-        <table>
-          <tr>
-            <td
-              class="tabsCell"
-              v-for="(tab, index) in tabs"
-              :key="tab + index"
-            >
-              <TabBarName :tab-index="index" />
-            </td>
-          </tr>
-        </table>
-      </td>
-      <td class="addTabCell">
+  <div class="tabBar">
+    <div>
+      <table>
+        <tr>
+          <td
+            class="tabsCell"
+            v-for="(tab, index) in tabs"
+            :key="tab + index"
+          >
+            <TabBarName :tab-index="index" />
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div>
+      <div class="tabButtons">
         <div
           class="addTab clickable"
           @click="addNewTab"
         >
           +
         </div>
-      </td>
-      <td>
         <div
           class="settings clickable"
           @click="showSettings"
         >
-          <img
-            src="../imgs/settings.svg"
-            class="settingsImg"
-          >
+          <div class="settingsImgContainer">
+            <img
+              src="../imgs/settings.svg"
+              class="settingsImg"
+            >
+          </div>
         </div>
-      </td>
-    </tr>
-  </table>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script lang="ts">
@@ -65,34 +65,41 @@ export default Vue.extend({
 </script>
 
 <style scoped>
+.tabBar {
+  z-index: 3000;
+  padding-bottom: 15px;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 80% 20%;
+  grid-column-gap: 10px;
+}
+
+.tabButtons {
+  width: 50px;
+  display: grid;
+  grid-template-columns: 50% 50%;
+  grid-column-gap: 5px;
+}
+
 .addTabCell {
   width: 24px;
 }
 
 .addTab {
-  font-size: 2rem;
+  font-size: 2.5rem;
   display: inline-block;
 }
 
-.settings {
-  width: 18px;
+.settingsImgContainer {
+  height: 100%;
+  position: relative;
 }
 
 .settingsImg {
   width: 100%;
-}
-
-.tabBar {
-  z-index: 3000;
-  padding-bottom: 15px;
-  width: 100%;
-}
-
-.tabNames {
-  width: 80%;
-}
-
-.tabsCells > .tabsRow:not(:last-child):after {
-  border-right: 1px solid black;
+  position: absolute;
+  top: 0;
+  bottom: 8px;
+  margin: auto;
 }
 </style>

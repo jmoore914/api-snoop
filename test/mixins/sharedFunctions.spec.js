@@ -1,6 +1,6 @@
-import {checkObjectMatchesType} from '../../src/mixins/sharedFunctions';
+import {checkObjectMatchesTemplate} from '../../src/mixins/sharedFunctions';
 
-describe('checkObjectMatchesType shoulld check if a supplied object has the same shape as a template', ()=>{
+describe('checkObjectMatchesTemplate shoulld check if a supplied object has the same shape as a template', ()=>{
 	it('should pass for simple objects', ()=>{
 		const template = {
 			strProp: 'A',
@@ -9,7 +9,7 @@ describe('checkObjectMatchesType shoulld check if a supplied object has the same
 		const obj = {strProp: 'B',
 			numProp: 123,
 			boolProp: true};
-		const checkedObj = checkObjectMatchesType(template, obj);
+		const checkedObj = checkObjectMatchesTemplate(template, obj);
 		expect(checkedObj).toEqual(true);
 	});
 	it('should fail if keys  mismatch', ()=>{
@@ -20,7 +20,7 @@ describe('checkObjectMatchesType shoulld check if a supplied object has the same
 		const obj = {strProp: 'B',
 			numProp: 123,
 			boolyPropz: true};
-		const checkedObj = checkObjectMatchesType(template, obj);
+		const checkedObj = checkObjectMatchesTemplate(template, obj);
 		expect(checkedObj).toEqual(false);
 	});
 	it('should fail if missing keys', ()=>{
@@ -31,7 +31,7 @@ describe('checkObjectMatchesType shoulld check if a supplied object has the same
 		const obj = {strProp: 'B',
 			numProp: 123
 		};
-		const checkedObj = checkObjectMatchesType(template, obj);
+		const checkedObj = checkObjectMatchesTemplate(template, obj);
 		expect(checkedObj).toEqual(false);
 	});
 	it('should fail if extra keys', ()=>{
@@ -44,7 +44,7 @@ describe('checkObjectMatchesType shoulld check if a supplied object has the same
 			boolProp: true,
 			extraProp: 'Extra'
 		};
-		const checkedObj = checkObjectMatchesType(template, obj);
+		const checkedObj = checkObjectMatchesTemplate(template, obj);
 		expect(checkedObj).toEqual(false);
 	});
 	it('should fail if mismatched types', ()=>{
@@ -56,7 +56,7 @@ describe('checkObjectMatchesType shoulld check if a supplied object has the same
 			numProp: 123,
 			boolProp: 456
 		};
-		const checkedObj = checkObjectMatchesType(template, obj);
+		const checkedObj = checkObjectMatchesTemplate(template, obj);
 		expect(checkedObj).toEqual(false);
 	});
 	it('should work for nested objects', ()=>{
@@ -77,7 +77,7 @@ describe('checkObjectMatchesType shoulld check if a supplied object has the same
 			strProp: 'abc',
 			nestedProp: objNested
 		};
-		const checkedObj = checkObjectMatchesType(template, obj);
+		const checkedObj = checkObjectMatchesTemplate(template, obj);
 		expect(checkedObj).toEqual(true);
 	});
 	it('should fail for mismatched nested objects', ()=>{
@@ -98,7 +98,7 @@ describe('checkObjectMatchesType shoulld check if a supplied object has the same
 			strProp: 'abc',
 			nestedProp: objNested
 		};
-		const checkedObj = checkObjectMatchesType(template, obj);
+		const checkedObj = checkObjectMatchesTemplate(template, obj);
 		expect(checkedObj).toEqual(false);
 	});
     
@@ -120,7 +120,7 @@ describe('checkObjectMatchesType shoulld check if a supplied object has the same
 			strProp: 'abc',
 			nestedProp: objNested
 		};
-		const checkedObj = checkObjectMatchesType(template, obj);
+		const checkedObj = checkObjectMatchesTemplate(template, obj);
 		expect(checkedObj).toEqual(true);
 	});
 	it('should work with arrays', ()=>{
@@ -145,7 +145,7 @@ describe('checkObjectMatchesType shoulld check if a supplied object has the same
 			strProp: 'abc',
 			nestedProp: [objNestedOne, objNestedTwo]
 		};
-		const checkedObj = checkObjectMatchesType(template, obj);
+		const checkedObj = checkObjectMatchesTemplate(template, obj);
 		expect(checkedObj).toEqual(false);
 	});
 	it('should fail if object array is empty', ()=>{
@@ -164,7 +164,7 @@ describe('checkObjectMatchesType shoulld check if a supplied object has the same
 			strProp: 'abc',
 			nestedProp: []
 		};
-		const checkedObj = checkObjectMatchesType(template, obj);
+		const checkedObj = checkObjectMatchesTemplate(template, obj);
 		expect(checkedObj).toEqual(false);
 	});
     
@@ -180,7 +180,7 @@ describe('checkObjectMatchesType shoulld check if a supplied object has the same
 			strProp: 'abc',
 			nestedProp: [4, 3, 4]
 		};
-		const checkedObj = checkObjectMatchesType(template, obj);
+		const checkedObj = checkObjectMatchesTemplate(template, obj);
 		expect(checkedObj).toEqual(true);
 	});
     
@@ -196,7 +196,7 @@ describe('checkObjectMatchesType shoulld check if a supplied object has the same
 			strProp: 'abc',
 			nestedProp: [4, 'abc', 4]
 		};
-		const checkedObj = checkObjectMatchesType(template, obj);
+		const checkedObj = checkObjectMatchesTemplate(template, obj);
 		expect(checkedObj).toEqual(false);
 	});
     
@@ -227,7 +227,7 @@ describe('checkObjectMatchesType shoulld check if a supplied object has the same
 			strProp: 'abc',
 			nestedProp: [objNested, objMismatch]
 		};
-		const checkedObj = checkObjectMatchesType(template, obj);
+		const checkedObj = checkObjectMatchesTemplate(template, obj);
 		expect(checkedObj).toEqual(false);
 	});
 } );

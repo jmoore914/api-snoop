@@ -1,12 +1,16 @@
 import Vue from 'vue';
-import {createEmptyTab} from '../mixins/sharedFunctions';
+import {createEmptyTab, cloneObject} from '../mixins/sharedFunctions';
 import {modalSettings, modalLastResponse} from './modals';
 
-export const store = Vue.observable<Store>({
-	tabs: [createEmptyTab()] as Tab[],
-	selectedTabIndex: 0,
-	modals: {
-		modalSettings: modalSettings,
-		modalLastResponse: modalLastResponse
-	}
-});
+export function createInitialStore(): Store{
+	return cloneObject({
+		tabs: [createEmptyTab()] as Tab[],
+		selectedTabIndex: 0,
+		modals: {
+			modalSettings: modalSettings,
+			modalLastResponse: modalLastResponse
+		}
+	});
+}
+
+export const store = Vue.observable<Store>(createInitialStore());

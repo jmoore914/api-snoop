@@ -5,24 +5,34 @@
       class="fullPage"
       @click="disableEditMode"
     />
-    <div
-      class="tabName"
-      :class="{selectedTab: isSelected}"
-      @click="tabClick"
-    >
-      <input
-        :id="inputElementId"
-        v-show="editMode"
-        class="tabNameInput"
-        v-model="tabInfo.name"
-        :style="{width: inputWidth}"
-      >
+    <div :class="{selectedTab: isSelected}">
+      <div class="spacer" />
       <div
-        class="tabNameText"
-        :class="{clickable:!isSelected}"
-        v-show="!editMode"
+        class="tabName"
+        @click="tabClick"
       >
-        {{ tabInfo.name }}
+        <input
+          :id="inputElementId"
+          v-show="editMode"
+          class="tabNameInput"
+          v-model="tabInfo.name"
+          :style="{width: inputWidth}"
+        >
+        <div
+          class="tabNameText"
+          :class="{clickable:!isSelected}"
+          v-show="!editMode"
+        >
+          {{ tabInfo.name }}
+        </div>
+      </div>
+      <div class="closeButtonContainer">
+        <div
+          v-show="isSelected"
+          class="closeButton"
+        >
+          +
+        </div>
       </div>
     </div>
   </div>
@@ -104,5 +114,21 @@ export default Vue.extend({
   border: none;
   color: black;
   font-size: 1rem;
+}
+
+.spacer,
+.closeButtonContainer {
+  width: 10px;
+}
+
+.spacer,
+.tabName,
+.closeButtonContainer {
+  display: inline-block;
+}
+
+.closeButton {
+  font-weight: bold;
+  transform: rotate(45deg);
 }
 </style>

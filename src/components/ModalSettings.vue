@@ -52,6 +52,10 @@
 import Vue from 'vue';
 import Modal from './Modal.vue';
 import {store} from '../store/store';
+import {
+	checkObjectMatchesTemplate,
+	createEmptyTab
+} from '../mixins/sharedFunctions';
 
 export default Vue.extend({
 	components: {
@@ -66,8 +70,8 @@ export default Vue.extend({
 	computed: {},
 	methods: {
 		saveConfig(): void {
-			const encodedContent = encodeURI('data:application/json;charset=utf-8,' + JSON.stringify(store, null, 2));
-			console.log(encodedContent);
+			const encodedContent = encodeURI('data:application/json;charset=utf-8,' +
+          JSON.stringify({tabs: store.tabs}, null, 2));
 			let link = document.createElement('a');
 			link.setAttribute('href', encodedContent);
 			link.setAttribute('download', 'config.json');
@@ -81,9 +85,16 @@ export default Vue.extend({
 			const uploadedFile = (document.getElementById('loadConfigInput')! as HTMLInputElement).files![0];
 			var fileReader = new FileReader();
 			fileReader.onload = fileLoadedEvent => {
-				const textFromFileLoaded = fileLoadedEvent.target!.result;
+				const textFromFileLoaded = (fileLoadedEvent.target! as FileReader)
+					.result;
 				const parsedText = JSON.parse(textFromFileLoaded as string);
-				return parsedText;
+				if (
+					checkObjectMatchesTemplate({tabs: [createEmptyTab()]}, parsedText)
+				) {
+					store.tabs.push(...parsedText.tabs);
+				} else {
+					console.log('Uploaded file not a store');
+				}
 			};
 
 			fileReader.readAsText(uploadedFile, 'UTF-8');

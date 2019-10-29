@@ -10,7 +10,14 @@ export function cloneObject<T>(object: T): T{
 	return JSON.parse(JSON.stringify(object));
 }
 
-export function checkObjectMatchesType(template: object, object: object): boolean{
+export function reassignObjectProperties<T>(startingObject: T, replacementObject: T): void{
+	const props = Object.keys(startingObject) as (keyof typeof startingObject)[];
+	props.forEach(prop => {
+		setObjectProperty(startingObject, prop, getObjectProperty(replacementObject, prop));
+	});
+}
+
+export function checkObjectMatchesTemplate(template: object, object: object): boolean{
 	const templateProps = Object.keys(template) as (keyof typeof template)[];
 	const objectProps = Object.keys(object)  as (keyof typeof object)[];
 	if(templateProps.length !== objectProps.length){
@@ -32,13 +39,13 @@ export function checkObjectMatchesType(template: object, object: object): boolea
 					return false;
 				}
 				if(typeof templateProp[0] === 'object'){
-					return checkObjectMatchesType(templateProp[0], objPropArrItem as object);
+					return checkObjectMatchesTemplate(templateProp[0], objPropArrItem as object);
 				}
 				return true;
 			});
 		}
 		if(typeof templateProp === 'object'){
-			return checkObjectMatchesType(templateProp, objProp);
+			return checkObjectMatchesTemplate(templateProp, objProp);
 		}
 		return true;
 	})){
