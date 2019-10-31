@@ -121,6 +121,7 @@
       <div>
         <div
         v-show="apiCardInfo.apiAvailable && started"
+        @click="showLastResponse"
       >
         <img 
           class="cardIcon clickable"
@@ -129,7 +130,8 @@
       </div>
       <div
         v-show="!apiCardInfo.apiAvailable && started"
-      >
+                @click="showLastResponse"
+>
         <img 
           class="cardIcon clickable"
           src="../imgs/exCircleOutline.svg"
@@ -209,6 +211,11 @@ export default Vue.extend({
 		refreshNow(): void {
 			this.started = true;
 			this.sendRequest();
+		},
+		showLastResponse(): void {
+			store.modals.modalLastResponse.lastResponse = this.lastResponse;
+			store.modals.modalLastResponse.showContainer = true;
+			store.modals.modalLastResponse.show = true;
 		}
 	}
 });

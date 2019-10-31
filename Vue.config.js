@@ -1,3 +1,5 @@
+const publicPath = process.env.NODE_ENV==='development' ? '' : `${process.cwd()}/dist/`;
+
 module.exports = {
-	publicPath: `${process.cwd()}/dist/`
+	publicPath: publicPath
 };

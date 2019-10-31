@@ -70,7 +70,7 @@ export default Vue.extend({
   margin-left: -20%;
   margin-top: -20%;
   overflow: hidden;
-  z-index: 1000;
+  z-index: 2000;
 }
 
 .modalBackground {
@@ -83,7 +83,7 @@ export default Vue.extend({
   background-color: #eeeeee;
   padding: 15px;
   padding-top: 0;
-  z-index: 1000;
+  z-index: 2000;
   top: 10%;
   left: 50%;
   max-height: 70%;

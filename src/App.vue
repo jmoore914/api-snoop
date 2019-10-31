@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <ModalSettings />
+    <ModalLastResponse />
     <TabBar />
     <div
       v-for="(tab, tabIndex) in tabs"
@@ -17,13 +18,15 @@ import {store} from './store/store';
 import Tab from './components/Tab.vue';
 import TabBar from './components/TabBar.vue';
 import ModalSettings from './components/ModalSettings.vue';
+import ModalLastResponse from './components/ModalLastResponse.vue';
 
 export default Vue.extend({
 	name: 'App',
 	components: {
 		Tab,
 		TabBar,
-		ModalSettings
+		ModalSettings,
+		ModalLastResponse
 	},
 	computed: {
 		tabs(): Tab[] {

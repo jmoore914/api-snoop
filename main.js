@@ -4,16 +4,14 @@ let win;
 
 function createWindow () {
 	win = new BrowserWindow({
-		width: 800,
-		height: 600,
+		width: 1000,
+		height: 800,
 		webPreferences: {
 			nodeIntegration: true
 		}
 	});
 
 	win.loadFile('dist/index.html');
-
-	// win.webContents.openDevTools();
 
 	win.on('closed', () => {
 		win = null;

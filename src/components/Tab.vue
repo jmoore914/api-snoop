@@ -40,6 +40,7 @@ export default Vue.extend({
 	},
 	computed: {
 		isSelected(): boolean {
+			console.log(process.env.NODE_ENV);
 			return this.tabIndex === store.selectedTabIndex;
 		}
 	},
