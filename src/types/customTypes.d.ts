@@ -2,6 +2,7 @@ interface Tab{
 	name: string;
 	isMonitoring: boolean;
 	apis: ApiCard[];
+	uuid: string;
 }
 
 interface ApiCard {

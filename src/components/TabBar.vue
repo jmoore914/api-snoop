@@ -5,10 +5,10 @@
         <tr>
           <td
             class="tabsCell"
-            v-for="(tab, index) in tabs"
-            :key="tab + index"
+            v-for="(tab, tabIndex) in tabs"
+            :key="'tab_' + tab.uuid"
           >
-            <TabBarName :tab-index="index" />
+            <TabBarName :tab-index="tabIndex" />
           </td>
         </tr>
       </table>

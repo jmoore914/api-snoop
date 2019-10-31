@@ -29,7 +29,8 @@
       <div class="closeButtonContainer">
         <div
           v-show="isSelected"
-          class="closeButton"
+          class="closeButton clickable"
+          @click="closeTab"
         >
           +
         </div>
@@ -57,7 +58,7 @@ export default Vue.extend({
 			return this.tabIndex === store.selectedTabIndex;
 		},
 		inputElementId(): string {
-			return 'tabBarName' + this.tabIndex;
+			return 'tabBarName' + this.tabInfo.uuid;
 		},
 		inputWidth(): string {
 			return this.tabInfo.name.length + 1 + 'ch';
@@ -66,16 +67,29 @@ export default Vue.extend({
 	methods: {
 		tabClick(): void {
 			if (this.isSelected) {
-				this.editMode = true;
-				const inputElement = document.getElementById(this.inputElementId)! as HTMLInputElement;
-				inputElement.focus();
-				inputElement.select();
+				if (!this.editMode) {
+					this.editMode = true;
+					const inputElement = document.getElementById(this.inputElementId)! as HTMLInputElement;
+					console.log(inputElement);
+					setTimeout(() => {
+						inputElement.focus();
+					}, 0);
+					setTimeout(() => {
+						inputElement.select();
+					}, 0);
+				}
 			} else {
 				store.selectedTabIndex = this.tabIndex;
 			}
 		},
 		disableEditMode(): void {
 			this.editMode = false;
+		},
+		closeTab() {
+			if (this.tabIndex === store.tabs.length - 1) {
+				store.selectedTabIndex = this.tabIndex - 1;
+			}
+			store.tabs.splice(this.tabIndex, 1);
 		}
 	}
 });
@@ -83,6 +97,8 @@ export default Vue.extend({
 
 <style scoped>
 .fullPage {
+  top: 0;
+  left: 0;
   width: 100vw;
   height: 100vh;
   opacity: 0;
@@ -92,12 +108,13 @@ export default Vue.extend({
 
 .tabName {
   position: relative;
-  z-index: 200;
   height: 28px;
 }
 
 .selectedTab {
+  position: relative;
   border-bottom: 4px solid black;
+  z-index: 1000;
 }
 
 .tabNameText {
@@ -116,9 +133,12 @@ export default Vue.extend({
   font-size: 1rem;
 }
 
-.spacer,
-.closeButtonContainer {
+.spacer {
   width: 10px;
+}
+
+.closeButtonContainer {
+  min-width: 12px;
 }
 
 .spacer,
@@ -128,7 +148,7 @@ export default Vue.extend({
 }
 
 .closeButton {
-  font-weight: bold;
+  font-size: 1.5rem;
   transform: rotate(45deg);
 }
 </style>

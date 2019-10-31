@@ -4,7 +4,7 @@
     <TabBar />
     <div
       v-for="(tab, tabIndex) in tabs"
-      :key="'tab' + tabIndex"
+      :key="'tab_' + tab.uuid"
     >
       <Tab :tab-index="tabIndex" />
     </div>
@@ -25,10 +25,10 @@ export default Vue.extend({
 		TabBar,
 		ModalSettings
 	},
-	data() {
-		return {
-			tabs: store.tabs
-		};
+	computed: {
+		tabs(): Tab[] {
+			return store.tabs;
+		}
 	}
 });
 </script>
