@@ -1,9 +1,11 @@
 {
   "name": "api-watcher",
   "version": "0.1.0",
+  "main": "./main.js",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
+    "start": "electron .",
     "test": "jest",
     "lint": "vue-cli-service lint"
   },
