@@ -1,4 +1,4 @@
-import {checkObjectMatchesTemplate} from '../../src/mixins/sharedFunctions';
+import {checkObjectMatchesTemplate, replaceEnvVars} from '../../src/mixins/sharedFunctions';
 
 describe('checkObjectMatchesTemplate shoulld check if a supplied object has the same shape as a template', ()=>{
 	it('should pass for simple objects', ()=>{
@@ -231,3 +231,21 @@ describe('checkObjectMatchesTemplate shoulld check if a supplied object has the 
 		expect(checkedObj).toEqual(false);
 	});
 } );
+
+describe('replaceEnvVars should replace environment variable keywords with the system environment variable', () => {
+	it('should replace a single environment variables', () => {
+		process.env.testVar = 'Replaced';
+		const originalText = 'Replace this: $ENV_VAR(testVar)';
+		const replaced = replaceEnvVars(originalText);
+		expect(replaced).toEqual('Replace this: Replaced');
+	});
+	it('should replace multiple environment variables', () => {
+		process.env.testVar1 = 'Replacement1';
+		process.env.testVar2 = 'Replacement2';
+		const originalText = 'Replace this: $ENV_VAR(testVar1) and also this: $ENV_VAR(testVar2)';
+		const replaced = replaceEnvVars(originalText);
+		expect(replaced).toEqual('Replace this: Replacement1 and also this: Replacement2');
+
+	});
+	
+});

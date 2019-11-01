@@ -1,99 +1,105 @@
 <template>
-  <div class="api">
-    <div>
-      <div
-        class="expandButton"
-        :class="{editMode: editMode}"
-        @click="toggleEditMode"
-      >
-        <img src="../imgs/expandArrow.svg">
-      </div>
-    </div>
-    <div>
+  <form
+    id="requestInfoForm"
+    @submit.prevent
+  >
+    <div class="api">
       <div>
-        <div class="apiName">
-          <input
-            class="textInput apiNameInput"
-            :class="[{editMode: editMode},{monitorMode: !editMode}]"
-            :disabled="!editMode"
-            v-model="apiCardInfo.name"
-            :placeholder="namePlaceholder"
-          >
-        </div>
-      </div>
-      <transition name="expand">
-        <div
-          v-show="editMode"
-          class="expandedInfo"
+        <button
+          class="expandButton"
+          :class="{editMode: editMode}"
+          id="expandButton"
+          @click="submitForm('expandButton')"
         >
-          <div class="methodAndUrlGrid">
-            <div>
-              <select
-                v-model="apiCardInfo.callInfo.method"
-                class="select"
-              >
-                <option
-                  v-for="method in apiMethods"
-                  :key="method"
-                >
-                  {{ method }}
-                </option>
-              </select>
-            </div>
-            <div>
-              <input
-                class="textInput"
-                v-model="apiCardInfo.callInfo.url"
-                placeholder="http://example.com"
-              >
-            </div>
-          </div>
-          <div>
-            <h4>Headers:</h4>
-            <div
-              v-for="(headerInfo, headerIndex) in apiCardInfo.callInfo.headers"
-              :key="'header_' + headerIndex"
-              class="headersGrid"
-            >
-              <div>
-                <input
-                  class="textInput"
-                  v-model="apiCardInfo.callInfo.headers[headerIndex].name"
-                  placeholder="Key"
-                >
-              </div>
-              <div>
-                <input
-                  class="textInput"
-                  v-model="apiCardInfo.callInfo.headers[headerIndex].value"
-                  placeholder="Value"
-                >
-              </div>
-            </div>
-          </div>
-          <div>
-            <h4>Body</h4>
-            <textarea
-              class="textInput"
-              :disabled="apiCardInfo.callInfo.method === 'GET'"
-              v-model="apiCardInfo.callInfo.body"
-              placeholder=""
-            />
-            </div>
+          <img src="../imgs/expandArrow.svg">
+        </button>
+      </div>
+      <div>
         <div>
-        <h4>Expected Response</h4>
-        <input
-          class="textInput"
-          v-model="apiCardInfo.callInfo.expectedResponse"
-        >
+          <div class="apiName">
+            <input
+              class="textInput apiNameInput"
+              :class="[{editMode: editMode},{monitorMode: !editMode}]"
+              :disabled="!editMode"
+              v-model="apiCardInfo.name"
+              :placeholder="namePlaceholder"
+            >
+          </div>
         </div>
-      </div>
-      </transition>
-      </div>
+        <transition name="expand">
+          <div
+            v-show="editMode"
+            class="expandedInfo"
+          >
+            <div class="methodAndUrlGrid">
+              <div>
+                <select
+                  v-model="apiCardInfo.callInfo.method"
+                  class="select"
+                >
+                  <option
+                    v-for="method in apiMethods"
+                    :key="method"
+                  >
+                    {{ method }}
+                  </option>
+                </select>
+              </div>
+              <div>
+                <input
+                  class="textInput"
+                  v-model="apiCardInfo.callInfo.url"
+                  placeholder="http://example.com"
+                  required
+                >
+              </div>
+            </div>
+            <div>
+              <h4>Headers:</h4>
+              <div
+                v-for="(headerInfo, headerIndex) in apiCardInfo.callInfo.headers"
+                :key="'header_' + headerIndex"
+                class="headersGrid"
+              >
+                <div>
+                  <input
+                    class="textInput"
+                    v-model="apiCardInfo.callInfo.headers[headerIndex].name"
+                    placeholder="Key"
+                  >
+                </div>
+                <div>
+                  <input
+                    class="textInput"
+                    v-model="apiCardInfo.callInfo.headers[headerIndex].value"
+                    placeholder="Value"
+                  >
+                </div>
+              </div>
+            </div>
+            <div>
+              <h4>Body</h4>
+              <textarea
+                class="textInput"
+                :disabled="apiCardInfo.callInfo.method === 'GET'"
+                v-model="apiCardInfo.callInfo.body"
+                placeholder=""
+              />
+              </div>
+          <div>
+          <h4>Expected Response</h4>
+          <input
+            class="textInput"
+            v-model="apiCardInfo.callInfo.expectedResponse"
+          >
+          </div>
+</div>
+</transition>
+</div>
       <div class="icons">
         <div
         :class="{refreshing: refreshing}"
-        @click="refreshNow"
+          @click="submitForm('refreshButton')"
       >
         <img 
         class="refreshButton cardIcon clickable"
@@ -102,7 +108,7 @@
       </div>
       <div
         v-show="apiCardInfo.isMonitoring"
-        @click="stopMonitorApi"
+          @click="submitForm('pauseButton')"
       >
         <img         
           class="cardIcon clickable"
@@ -111,7 +117,7 @@
       </div>
       <div
         v-show="!apiCardInfo.isMonitoring"
-        @click="startMonitorApi"
+          @click="submitForm('playButton')"
       >
         <img 
           class="cardIcon clickable"
@@ -140,6 +146,7 @@
       </div>
       </div>
 </div>
+</form>
 </template>
 
 <script lang="ts">
@@ -162,7 +169,8 @@ export default Vue.extend({
 			apiMethods: ['GET', 'POST', 'PUT'],
 			refreshing: false,
 			isLooping: false,
-			started: false
+			started: false,
+			submitTarget: ''
 		};
 	},
 	computed: {
@@ -178,7 +186,23 @@ export default Vue.extend({
 		}
 	},
 	methods: {
-		toggleEditMode(): void {
+		submitForm(caller: 'expandButton' | 'refreshButton' | 'playButton' | 'pauseButton') {
+			const formElement = document.getElementById('requestInfoForm') as HTMLFormElement;
+			const formValid = formElement.checkValidity();
+			formElement.reportValidity();
+			if (formValid) {
+				if (caller === 'expandButton') {
+					this.toggleEditMode();
+				} else if (caller === 'refreshButton') {
+					this.refreshNow();
+				} else if (caller === 'playButton') {
+					this.startMonitorApi();
+				} else if (caller === 'pauseButton') {
+					this.stopMonitorApi();
+				}
+			}
+		},
+		toggleEditMode() {
 			this.editMode = !this.editMode;
 		},
 		startMonitorApi(): void {
@@ -216,6 +240,12 @@ export default Vue.extend({
 			store.modals.modalLastResponse.lastResponse = this.lastResponse;
 			store.modals.modalLastResponse.showContainer = true;
 			store.modals.modalLastResponse.show = true;
+		},
+		checkForm(e: Event): boolean | void {
+			console.log(e);
+			this.editMode = false;
+			e.preventDefault();
+			return true;
 		}
 	}
 });
@@ -243,6 +273,9 @@ export default Vue.extend({
   text-align: center;
   font-size: 2.5em;
   transition: 0.25s linear;
+  padding: 0;
+  background: none;
+  border: none;
   margin-top: 10px;
 }
 

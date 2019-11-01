@@ -104,3 +104,11 @@ export function generateUuid(): string {
 	return uuid;
 	
 }
+
+export function replaceEnvVars(input: string): string {
+	function replaceEnvVar(match: string, group: string): string{
+		const found = process.env[group];
+		return found ? found : '';
+	}
+	return input.replace(/\$ENV_VAR\((.*?)\)/g, replaceEnvVar);
+}
