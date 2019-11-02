@@ -23,6 +23,7 @@ interface ApiCallInfo {
 interface ApiCallInfoHeader {
 	name: string;
 	value: string;
+	uuid: string;
 }
 
 interface ApiCallResponse {

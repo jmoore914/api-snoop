@@ -6,7 +6,7 @@
     <div class="api">
       <div>
         <button
-          class="expandButton"
+          class="expandButton imgButton"
           :class="{editMode: editMode}"
           id="expandButton"
           @click="submitForm('expandButton')"
@@ -58,7 +58,7 @@
               <h4>Headers:</h4>
               <div
                 v-for="(headerInfo, headerIndex) in apiCardInfo.callInfo.headers"
-                :key="'header_' + headerIndex"
+                :key="'header_' + headerIndex.uuid"
                 class="headersGrid"
               >
                 <div>
@@ -74,6 +74,26 @@
                     v-model="apiCardInfo.callInfo.headers[headerIndex].value"
                     placeholder="Value"
                   >
+                </div>
+                <div class="headerButtonsGrid">
+                  <div>
+                    <button
+                      class="imgButton clickable"
+                      @click="removeHeader(headerIndex)"
+                      type="button"
+                    >
+                      <img src="../imgs/minusCircleOutline.svg">
+                    </button>
+                  </div>
+                  <div>
+                    <button
+                      type="button"
+                      class="imgButton clickable"
+                      @click="addHeader(headerIndex)"
+                    >
+                      <img src="../imgs/addCircleOutline.svg">
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -152,7 +172,11 @@
 <script lang="ts">
 import {store} from '../store/store';
 import {apiCall} from '../mixins/apiCalls';
-import {sleep, createEmptyCallResponse} from '../mixins/sharedFunctions';
+import {
+	sleep,
+	createEmptyCallResponse,
+	createEmptyHeader
+} from '../mixins/sharedFunctions';
 
 import Vue from 'vue';
 
@@ -241,11 +265,17 @@ export default Vue.extend({
 			store.modals.modalLastResponse.showContainer = true;
 			store.modals.modalLastResponse.show = true;
 		},
-		checkForm(e: Event): boolean | void {
-			console.log(e);
-			this.editMode = false;
-			e.preventDefault();
-			return true;
+		addHeader(index: number) {
+			this.apiCardInfo.callInfo.headers.splice(index + 1,
+				0,
+				createEmptyHeader());
+		},
+		removeHeader(index: number) {
+			if (this.apiCardInfo.callInfo.headers.length > 1) {
+				this.apiCardInfo.callInfo.headers.splice(index, 1);
+			} else {
+				this.apiCardInfo.callInfo.headers = [createEmptyHeader()];
+			}
 		}
 	}
 });
@@ -273,9 +303,6 @@ export default Vue.extend({
   text-align: center;
   font-size: 2.5em;
   transition: 0.25s linear;
-  padding: 0;
-  background: none;
-  border: none;
   margin-top: 10px;
 }
 
@@ -322,8 +349,22 @@ export default Vue.extend({
 
 .headersGrid {
   display: grid;
-  grid-template-columns: 30% 50%;
-  grid-column-gap: 20%;
+  grid-template-columns: 30% 55% 10%;
+  grid-column-gap: 10px;
+  grid-row-gap: 20px;
+}
+
+@media screen and (max-width: 1000px) {
+  .headersGrid {
+    grid-template-columns: 30% 45% 15%;
+  }
+}
+
+.headerButtonsGrid {
+  text-align: right;
+  display: grid;
+  grid-template-columns: 40% 40%;
+  grid-column-gap: 8%;
 }
 
 .icons {

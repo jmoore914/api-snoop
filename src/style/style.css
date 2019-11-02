@@ -3,17 +3,35 @@ html {
   }
 *, *:before, *:after {
     box-sizing: inherit;
+    font-family: inherit;
 }
 
 body{
   background-color: #dfdfdf;
 }
 
-.clickable:hover {
+.clickable:hover{
   cursor: pointer;
   opacity: 60%;
 }
 
 .circle{
   border-radius: 50%;
+}
+
+.imgButton{
+  outline: 0;
+  padding: 0;
+  background: none;
+  border: none; 
+}
+
+
+
+.imgButton::-moz-focus-inner {
+  border: 0;
+}
+
+.imgButton:focus {
+  border: 0;
 }

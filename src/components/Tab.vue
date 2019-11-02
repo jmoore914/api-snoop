@@ -11,7 +11,7 @@
       />
     </div>
     <div
-      class="pauseButton circle clickable"
+      class="addCardButton circle clickable"
       @click="addApiCard"
     >
       +
@@ -57,13 +57,13 @@ export default Vue.extend({
   padding-bottom: 20px;
 }
 
-.pauseButton {
+.addCardButton {
   color: #e6e6e6;
   text-align: center;
   font-size: 44px;
   background-color: #878ef1;
   position: fixed;
-  right: 30px;
+  right: 10%;
   bottom: 30px;
   width: 50px;
   height: 50px;

@@ -60,39 +60,50 @@ export function sleep(sec: number): Promise<void> {
 	return new Promise(resolve => setTimeout(resolve, sec*1000));
 }
 
+
+export function createEmptyTab(): Tab{
+	return {
+		name: 'New Tab',
+		isMonitoring: false,
+		apis: [createEmptyApiCard()],
+		uuid: generateUuid()
+	};
+}
+
+
+export function createEmptyApiCard(): ApiCard{
+	return {
+		name: '',
+		isMonitoring: false,
+		callInfo: createEmptyApiCallInfo(),
+		apiAvailable: true
+	};
+}
+
 export function createEmptyApiCallInfo(): ApiCallInfo{
 	return {
 		method: 'GET',
 		url: '',
-		headers: [{name:'', value:''}],
+		headers: [createEmptyHeader()],
 		body: '',
 		expectedResponse: ''
 	};
 }
 
-export function createEmptyApiCard(): ApiCard{
-	const emptyApiCallInfo = createEmptyApiCallInfo();
-	return {
+
+export function createEmptyHeader(): ApiCallInfoHeader{
+	return cloneObject({
 		name: '',
-		isMonitoring: false,
-		callInfo: emptyApiCallInfo,
-		apiAvailable: true
-	};
+		value: '',
+		uuid: generateUuid()
+	});
 }
 
-export function createEmptyTab(): Tab{
-	const emptyApiCard = createEmptyApiCard();
-	return {
-		name: 'New Tab',
-		isMonitoring: false,
-		apis: [emptyApiCard],
-		uuid: generateUuid()
-	};
-}
 
 export function createEmptyCallResponse(): ApiCallResponse{
 	return cloneObject({time: '', code: 0, text: ''});
 }
+
 
 export function generateUuid(): string {
 	let dateTime = new Date().getTime();

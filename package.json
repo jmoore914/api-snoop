@@ -1,17 +1,20 @@
 {
   "name": "api-watcher",
   "version": "0.1.0",
-  "main": "./main.js",
+  "main": "./app.js",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "start": "electron .",
+    "start": "node bin.js",
     "test": "jest",
     "lint": "vue-cli-service lint"
   },
+  "bin": {
+    "vue-devtools": "./bin.js"
+  },
   "dependencies": {
     "core-js": "^3.1.2",
-    "electron": "^6.0.12",
+    "cross-spawn": "^7.0.1",
     "vue": "^2.6.10"
   },
   "devDependencies": {
@@ -23,6 +26,7 @@
     "@vue/cli-service": "^4.0.0",
     "@vue/eslint-config-typescript": "^4.0.0",
     "@vue/test-utils": "1.0.0-beta.29",
+    "electron": "^7.0.1",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
     "typescript": "~3.5.3",

@@ -2,6 +2,8 @@ const {app, BrowserWindow} = require('electron');
 
 let win;
 
+console.log(require('electron'));
+
 function createWindow () {
 	win = new BrowserWindow({
 		width: 1000,
