@@ -40,10 +40,10 @@ export default Vue.extend({
 		}
 	},
 	methods: {
-		hide() {
+		hide(): void {
 			store.modals[this.modalName].show = false;
 		},
-		afterLeave() {
+		afterLeave(): void {
 			store.modals[this.modalName].showContainer = false;
 		}
 	}

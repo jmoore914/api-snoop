@@ -85,7 +85,7 @@ export default Vue.extend({
 		disableEditMode(): void {
 			this.editMode = false;
 		},
-		closeTab() {
+		closeTab(): void {
 			if (this.tabIndex === store.tabs.length - 1) {
 				store.selectedTabIndex = this.tabIndex - 1;
 			}

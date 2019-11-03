@@ -40,7 +40,7 @@ export default Vue.extend({
 					.replace(/\s\s/g, '\xa0\xa0\xa0\xa0')
 					.replace(/<br>/g, '\n');
 			} catch (e) {
-				return 'unparsed' + this.lastResponse.text;
+				return 'Failed to parse: ' + this.lastResponse.text;
 			}
 		}
 	}

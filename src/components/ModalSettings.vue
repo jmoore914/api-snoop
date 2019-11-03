@@ -77,10 +77,10 @@ export default Vue.extend({
 			document.body.appendChild(link);
 			link.click();
 		},
-		openConfigFile() {
+		openConfigFile(): void {
 			document.getElementById('loadConfigInput')!.click();
 		},
-		loadConfigFile() {
+		loadConfigFile(): void {
 			const uploadedFile = (document.getElementById('loadConfigInput')! as HTMLInputElement).files![0];
 			var fileReader = new FileReader();
 			fileReader.onload = fileLoadedEvent => {
