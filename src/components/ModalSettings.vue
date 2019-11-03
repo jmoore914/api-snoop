@@ -7,7 +7,7 @@
         <div>
           <input
             class="numInput"
-            v-model.number="timeoutSecs"
+            v-model.number="store.modals.modalSettings.timeoutSecs"
             type="number"
           >
         </div>
@@ -15,7 +15,7 @@
         <div>
           <input
             class="numInput"
-            v-model.number="refreshIntervalSecs"
+            v-model.number="store.modals.modalSettings.refreshIntervalSecs"
             type="number"
           >
         </div>
@@ -63,8 +63,7 @@ export default Vue.extend({
 	},
 	data() {
 		return {
-			timeoutSecs: store.modals.modalSettings.timeoutSecs,
-			refreshIntervalSecs: store.modals.modalSettings.refreshIntervalSecs
+			store: store
 		};
 	},
 	computed: {},

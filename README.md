@@ -1,27 +1,33 @@
 # api-watcher
 
-## Project setup
+## Installation
+```
+npm install -g api-monitor
+```
+
+## Usage
+Run: 
+```
+api-monitor
+```
+
+## Development
+### Install dependencies
 ```
 npm install
 ```
 
-### Compiles and hot-reloads for development
-```
+### Run in browser
+``` 
 npm run serve
 ```
 
-### Compiles and minifies for production
+### Run in electron
+First build the app:
 ```
 npm run build
 ```
-
-### Run your tests
+Then launch the electron app:
 ```
-npm run test
+npm start
 ```
-
-### Lints and fixes files
-```
-npm run lint
-```
-

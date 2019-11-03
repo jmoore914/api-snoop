@@ -210,7 +210,7 @@ export default Vue.extend({
 		}
 	},
 	methods: {
-		submitForm(caller: 'expandButton' | 'refreshButton' | 'playButton' | 'pauseButton') {
+		submitForm(caller: 'expandButton' | 'refreshButton' | 'playButton' | 'pauseButton'): void {
 			const formElement = document.getElementById('requestInfoForm') as HTMLFormElement;
 			const formValid = formElement.checkValidity();
 			formElement.reportValidity();
@@ -226,7 +226,7 @@ export default Vue.extend({
 				}
 			}
 		},
-		toggleEditMode() {
+		toggleEditMode(): void {
 			this.editMode = !this.editMode;
 		},
 		startMonitorApi(): void {
@@ -240,9 +240,20 @@ export default Vue.extend({
 			this.isLooping = true;
 			do {
 				this.sendRequest();
-				await sleep(store.modals.modalSettings.refreshIntervalSecs);
+				await this.microSleep();
 			} while (this.apiCardInfo.isMonitoring);
 			this.isLooping = false;
+		},
+
+		async microSleep(): Promise<void> {
+			let i = 0;
+			do {
+				await sleep(1);
+				i++;
+			} while (
+				this.apiCardInfo.isMonitoring &&
+        i < store.modals.modalSettings.refreshIntervalSecs
+			);
 		},
 
 		async sendRequest(): Promise<void> {
@@ -265,12 +276,12 @@ export default Vue.extend({
 			store.modals.modalLastResponse.showContainer = true;
 			store.modals.modalLastResponse.show = true;
 		},
-		addHeader(index: number) {
+		addHeader(index: number): void {
 			this.apiCardInfo.callInfo.headers.splice(index + 1,
 				0,
 				createEmptyHeader());
 		},
-		removeHeader(index: number) {
+		removeHeader(index: number): void {
 			if (this.apiCardInfo.callInfo.headers.length > 1) {
 				this.apiCardInfo.callInfo.headers.splice(index, 1);
 			} else {

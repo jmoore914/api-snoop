@@ -2,6 +2,7 @@ import {replaceEnvVars} from './sharedFunctions';
 
 export function apiCall(apiInfo: ApiCallInfo, timeoutSecs: number): Promise<ApiCallResponse>{
 	return new Promise((resolve) => {
+		console.log(JSON.stringify(apiInfo, null, 2));
 		const req = new XMLHttpRequest();
 		req.open(apiInfo.method, replaceEnvVars(apiInfo.url));
 		req.timeout=timeoutSecs * 1000;
@@ -20,6 +21,7 @@ export function apiCall(apiInfo: ApiCallInfo, timeoutSecs: number): Promise<ApiC
 		};
 		req.onreadystatechange = () => {
 			if (req.readyState === 4) {
+				console.log(req.responseText);
 				resolve({
 					time: (new Date()).toISOString(),
 					code: req.status,
