@@ -1,15 +1,15 @@
 {
   "name": "api-snoop",
-  "version": "0.1.3",
+  "version": "0.1.5",
   "main": "./app.js",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "start": "node bin.js",
     "test": "jest",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "prepare": "npm run build"
   },
-  "prepare": "npm run build",
   "bin": {
     "api-snoop": "./bin.js"
   },
