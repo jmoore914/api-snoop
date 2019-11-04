@@ -1,6 +1,6 @@
 {
   "name": "api-snoop",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "main": "./app.js",
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -9,7 +9,7 @@
     "test": "jest",
     "lint": "vue-cli-service lint"
   },
-  "prepare": "vue-cli-service build",
+  "prepublishOnly": "vue-cli-service build",
   "bin": {
     "api-snoop": "./bin.js"
   },
