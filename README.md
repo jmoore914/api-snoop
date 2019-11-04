@@ -1,14 +1,14 @@
-# api-watcher
+# api-snoop
 
 ## Installation
 ```
-npm install -g api-monitor
+npm install -g api-snoop
 ```
 
 ## Usage
 Run: 
 ```
-api-monitor
+api-snoop
 ```
 
 ## Development

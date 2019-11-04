@@ -4,7 +4,7 @@ let win;
 
 function createWindow () {
 	win = new BrowserWindow({
-		title: 'Api Monitor',
+		title: 'Api Snoop',
 		icon: __dirname + '/dist/favicon.svg',
 		width: 1000,
 		height: 800,

@@ -6,7 +6,26 @@
       @click="disableEditMode"
     />
     <div :class="{selectedTab: isSelected}">
-      <div class="spacer" />
+      <div class="statusContainer">
+        <div v-show="anyMonitoring && allAvailable">
+          <img
+            class=""
+            src="../imgs/checkCircleOutline.svg"
+          >
+        </div>
+        <div v-show="anyMonitoring && !allAvailable">
+          <img
+            class=""
+            src="../imgs/exCircleOutline.svg"
+          >
+        </div>
+        <div v-show="!anyMonitoring">
+          <img
+            class=""
+            src="../imgs/pauseCircleOutline.svg"
+          >
+        </div>
+      </div>
       <div
         class="tabName"
         @click="tabClick"
@@ -62,6 +81,16 @@ export default Vue.extend({
 		},
 		inputWidth(): string {
 			return this.tabInfo.name.length + 1 + 'ch';
+		},
+		anyMonitoring(): boolean {
+			return this.tabInfo.apis.some((api: ApiCard): boolean => {
+				return api.isMonitoring;
+			});
+		},
+		allAvailable(): boolean {
+			return this.tabInfo.apis.every((api: ApiCard): boolean => {
+				return api.apiAvailable || !api.isMonitoring;
+			});
 		}
 	},
 	methods: {
@@ -133,15 +162,15 @@ export default Vue.extend({
   font-size: 1rem;
 }
 
-.spacer {
-  width: 10px;
+.statusContainer {
+  vertical-align: middle;
 }
 
 .closeButtonContainer {
   min-width: 12px;
 }
 
-.spacer,
+.statusContainer,
 .tabName,
 .closeButtonContainer {
   display: inline-block;
