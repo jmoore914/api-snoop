@@ -1,12 +1,12 @@
 import {replaceEnvVars} from './sharedFunctions';
 
 export function apiCall(apiInfo: ApiCallInfo, timeoutSecs: number): Promise<ApiCallResponse>{
-	return new Promise((resolve) => {
+	return new Promise((resolve: Resolve<ApiCallResponse>) => {
 		console.log(JSON.stringify(apiInfo, null, 2));
-		const req = new XMLHttpRequest();
+		const req: XMLHttpRequest = new XMLHttpRequest();
 		req.open(apiInfo.method, replaceEnvVars(apiInfo.url));
 		req.timeout=timeoutSecs * 1000;
-		const headers = apiInfo.headers.filter((header: ApiCallInfoHeader): boolean => {
+		const headers: ApiCallInfoHeader[] = apiInfo.headers.filter((header: ApiCallInfoHeader): boolean => {
 			return header.name as unknown as boolean;
 		});
 		headers.forEach((header: ApiCallInfoHeader): void => {

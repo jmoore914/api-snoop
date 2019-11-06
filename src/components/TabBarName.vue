@@ -98,7 +98,7 @@ export default Vue.extend({
 			if (this.isSelected) {
 				if (!this.editMode) {
 					this.editMode = true;
-					const inputElement = document.getElementById(this.inputElementId)! as HTMLInputElement;
+					const inputElement: HTMLInputElement = document.getElementById(this.inputElementId)! as HTMLInputElement;
 					console.log(inputElement);
 					setTimeout(() => {
 						inputElement.focus();

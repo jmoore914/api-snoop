@@ -13,4 +13,4 @@ export function createInitialStore(): Store{
 	});
 }
 
-export const store = Vue.observable<Store>(createInitialStore());
+export const store: Store = Vue.observable<Store>(createInitialStore());

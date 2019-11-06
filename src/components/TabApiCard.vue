@@ -219,8 +219,8 @@ export default Vue.extend({
 	},
 	methods: {
 		submitForm(caller: 'expandButton' | 'refreshButton' | 'playButton' | 'pauseButton'): void {
-			const formElement = document.getElementById('requestInfoForm') as HTMLFormElement;
-			const formValid = formElement.checkValidity();
+			const formElement: HTMLFormElement = document.getElementById('requestInfoForm') as HTMLFormElement;
+			const formValid: boolean = formElement.checkValidity();
 			formElement.reportValidity();
 			if (formValid) {
 				if (caller === 'expandButton') {
@@ -254,7 +254,7 @@ export default Vue.extend({
 		},
 
 		async microSleep(): Promise<void> {
-			let i = 0;
+			let i: number = 0;
 			do {
 				await sleep(1);
 				i++;
@@ -266,7 +266,7 @@ export default Vue.extend({
 
 		async sendRequest(): Promise<void> {
 			this.refreshing = true;
-			const resp = await apiCall(this.apiCardInfo.callInfo,
+			const resp: ApiCallResponse = await apiCall(this.apiCardInfo.callInfo,
 				store.modals.modalSettings.timeoutSecs);
 			this.lastResponse = resp;
 			this.apiCardInfo.apiAvailable = this.isAvailable;

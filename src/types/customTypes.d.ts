@@ -58,3 +58,5 @@ interface Store {
 		modalLastResponse: ModalLastResponse;
 	};
 }
+
+type Resolve<T> = (value?: T | PromiseLike<T> | undefined) => void

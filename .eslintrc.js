@@ -34,6 +34,8 @@ module.exports = {
 		'@typescript-eslint/no-use-before-define': [2, {functions: false}],
 		'@typescript-eslint/explicit-function-return-type': ['error', {allowExpressions: true}],
 		'@typescript-eslint/no-non-null-assertion': 0,
+		'@typescript-eslint/no-inferrable-types': 0,
+		'@typescript-eslint/typedef': ['error', {parameter: true, propertyDeclaration: true, variableDeclaration:true}]
 	},
 	parser: 'vue-eslint-parser',
 	parserOptions: {

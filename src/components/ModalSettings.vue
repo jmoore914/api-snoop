@@ -69,9 +69,9 @@ export default Vue.extend({
 	computed: {},
 	methods: {
 		saveConfig(): void {
-			const encodedContent = encodeURI('data:application/json;charset=utf-8,' +
+			const encodedContent: string = encodeURI('data:application/json;charset=utf-8,' +
           JSON.stringify({tabs: store.tabs}, null, 2));
-			let link = document.createElement('a');
+			const link: HTMLAnchorElement = document.createElement('a');
 			link.setAttribute('href', encodedContent);
 			link.setAttribute('download', 'config.json');
 			document.body.appendChild(link);
@@ -81,16 +81,18 @@ export default Vue.extend({
 			document.getElementById('loadConfigInput')!.click();
 		},
 		loadConfigFile(): void {
-			const uploadedFile = (document.getElementById('loadConfigInput')! as HTMLInputElement).files![0];
-			var fileReader = new FileReader();
-			fileReader.onload = fileLoadedEvent => {
-				const textFromFileLoaded = (fileLoadedEvent.target! as FileReader)
-					.result;
-				const parsedText = JSON.parse(textFromFileLoaded as string);
+			const uploadedFile: File = (document.getElementById('loadConfigInput')! as HTMLInputElement).files![0];
+			const fileReader: FileReader = new FileReader();
+			fileReader.onload = (fileLoadedEvent: ProgressEvent<FileReader>) => {
+				const textFromFileLoaded:
+				| string
+				| ArrayBuffer
+				| null = (fileLoadedEvent.target! as FileReader).result;
+				const parsedText: object = JSON.parse(textFromFileLoaded as string);
 				if (
 					checkObjectMatchesTemplate({tabs: [createEmptyTab()]}, parsedText)
 				) {
-					store.tabs.push(...parsedText.tabs);
+					store.tabs.push(...(parsedText as { tabs: Tab[] }).tabs);
 				} else {
 					console.log('Uploaded file not a store');
 				}
