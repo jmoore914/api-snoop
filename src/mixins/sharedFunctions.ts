@@ -76,7 +76,8 @@ export function createEmptyApiCard(): ApiCard{
 		name: '',
 		isMonitoring: false,
 		callInfo: createEmptyApiCallInfo(),
-		apiAvailable: true
+		apiAvailable: true,
+		uuid: generateUuid()
 	};
 }
 

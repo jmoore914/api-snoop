@@ -10,6 +10,7 @@ interface ApiCard {
 	isMonitoring: boolean;
 	callInfo: ApiCallInfo;
 	apiAvailable: boolean;
+	uuid: string;
 }
 
 interface ApiCallInfo {

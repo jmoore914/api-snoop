@@ -2,7 +2,7 @@
   <div v-show="isSelected">
     <div
       v-for="(api,apiIndex) in tabInfo.apis"
-      :key="'tab' + tabIndex +'_apiCard' + apiIndex"
+      :key="'tab' +'_' + api.uuid"
       class="card"
     >
       <TabApiCard

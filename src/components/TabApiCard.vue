@@ -112,6 +112,13 @@
             class="textInput"
             v-model="apiCardInfo.callInfo.expectedResponse"
           >
+          <div class="trashContainer">
+            <img
+            @click="deleteCard" 
+            class="clickable trashIcon"
+            src="../imgs/trashOutline.svg"
+            >
+            </div>
           </div>
 </div>
 </transition>
@@ -152,12 +159,12 @@
         <img 
           class="cardIcon clickable"
           src="../imgs/checkCircleOutline.svg"
->
+        >
       </div>
       <div
         v-show="!apiCardInfo.apiAvailable && started"
-                @click="showLastResponse"
->
+        @click="showLastResponse"
+      >
         <img 
           class="cardIcon clickable"
           src="../imgs/exCircleOutline.svg"
@@ -175,7 +182,8 @@ import {apiCall} from '../mixins/apiCalls';
 import {
 	sleep,
 	createEmptyCallResponse,
-	createEmptyHeader
+	createEmptyHeader,
+	createEmptyApiCard
 } from '../mixins/sharedFunctions';
 
 import Vue from 'vue';
@@ -287,6 +295,17 @@ export default Vue.extend({
 			} else {
 				this.apiCardInfo.callInfo.headers = [createEmptyHeader()];
 			}
+		},
+		deleteCard() {
+			console.log('delete');
+			if (store.tabs[this.tabIndex].apis.length === 1) {
+				console.log('a');
+				store.tabs[this.tabIndex].apis = [createEmptyApiCard()];
+			} else {
+				console.log('b');
+
+				store.tabs[this.tabIndex].apis.splice(this.apiIndex, 1);
+			}
 		}
 	}
 });
@@ -388,6 +407,15 @@ export default Vue.extend({
 
 .cardIcon {
   width: 100%;
+}
+
+.trashContainer {
+  padding-top: 25px;
+}
+
+.trashIcon {
+  width: 30px;
+  width: 30px;
 }
 
 .expand-enter-active,
