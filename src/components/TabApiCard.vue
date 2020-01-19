@@ -211,8 +211,9 @@ export default Vue.extend({
 		},
 		isAvailable(): boolean {
 			return (
-				this.lastResponse.code > 199 &&
-        this.lastResponse.code < 300 &&
+				store.modals.modalSettings.ignoreErrorCodes || 
+        (this.lastResponse.code > 199 &&
+        this.lastResponse.code < 300) &&
         this.lastResponse.text.includes(this.apiCardInfo.callInfo.expectedResponse)
 			);
 		}

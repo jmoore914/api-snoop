@@ -19,6 +19,13 @@
             type="number"
           >
         </div>
+        <div> Ignore error codes: </div>
+        <div class="checkDiv">
+          <input
+            v-model="store.modals.modalSettings.ignoreErrorCodes"
+            type="checkbox"
+          >
+        </div>
       </div>
       <div class="buttonsGrid">
         <div>
@@ -112,6 +119,10 @@ export default Vue.extend({
   grid-row-gap: 5px;
   grid-column-gap: 10px;
   padding-bottom: 50px;
+}
+
+.checkDiv {
+  text-align: right;
 }
 
 .buttonsGrid {

@@ -8,6 +8,7 @@ export const modalSettings: ModalSettings = {
 	showContainer: false,
 	timeoutSecs: 15,
 	refreshIntervalSecs: 300,
+	ignoreErrorCodes: false
 }; 
 
 

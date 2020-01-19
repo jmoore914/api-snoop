@@ -42,6 +42,7 @@ interface ModalBase{
 interface ModalSettings extends ModalBase {
 	timeoutSecs: number;
 	refreshIntervalSecs: number;
+	ignoreErrorCodes: boolean;
 }
 
 interface ModalLastResponse extends ModalBase {
