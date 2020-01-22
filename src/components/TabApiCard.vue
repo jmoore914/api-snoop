@@ -213,9 +213,8 @@ export default Vue.extend({
 			return (
 				store.modals.modalSettings.ignoreErrorCodes || 
         (this.lastResponse.code > 199 &&
-        this.lastResponse.code < 300) &&
-        this.lastResponse.text.includes(this.apiCardInfo.callInfo.expectedResponse)
-			);
+        this.lastResponse.code < 300)) &&
+        this.lastResponse.text.includes(this.apiCardInfo.callInfo.expectedResponse);
 		}
 	},
 	methods: {
